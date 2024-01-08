@@ -1,0 +1,149 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SpaceX Launches!";
+}
+
+<form method="post">
+    <button type="submit">Calculate launch prices!</button>
+</form>
+
+
+@* @if (Model.Launches != null && Model.Launches.Count > 0)
+{
+    <div class="row">
+        @foreach (var launch in Model.Launches)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center text-capitalize">
+                        <h5 class="card-title">Mission: @launch?.mission_name</h5>
+                        <p class="fw-medium">Flight Number: @launch?.flight_number</p>
+                        <p class="card-text">Launch Year: @launch?.launch_year</p>
+                        <p class="card-text">Launch Date: @launch?.launch_date_utc</p>
+                        <p class="card-text">Rocket: @launch?.Rocket?.rocket_name</p>
+                        <p class="card-text">Launch Site: @launch?.launch_site?.site_name</p>
+                        <p class="card-text">Launch Success: @launch?.launch_success</p>
+                        <p class="card-text">Details: @launch?.Details</p>
+                        @if (!string.IsNullOrEmpty(launch?.links?.video_link))
+                        {
+                            <a href="@launch!.links!.video_link" class="card-link">Watch The Launch!</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+ *@
+
+
+@if (Model.Launches != null && Model.Launches.Count > 0 && Model.RocketModels != null && Model.RocketModels.Count > 0)
+{
+    <div class="row">
+        @foreach (var launch in Model.Launches)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center text-capitalize">
+                        <h5 class="card-title">Mission: @launch?.mission_name</h5>
+                        <p class="fw-medium">Flight Number: @launch?.flight_number</p>
+                        <p class="card-text">Launch Year: @launch?.launch_year</p>
+                        <p class="card-text">Launch Date: @launch?.launch_date_utc</p>
+                        <p class="card-text">Rocket: @launch?.Rocket?.rocket_name</p>
+                        <p class="card-text">Launch Site: @launch?.launch_site?.site_name</p>
+                        <p class="card-text">Launch Success: @launch?.launch_success</p>
+                        <p class="card-text">Details: @launch?.Details</p>
+
+                        @if (launch?.Rocket != null)
+                        {
+                            // Find all rockets with the matching rocket_name
+                            var matchingRockets = Model.RocketModels.Where(r => r.rocket_name == launch.Rocket.rocket_name);
+
+                            // Display the cost for each matching rocket
+                            foreach (var matchingRocket in matchingRockets)
+                            {
+                                <p class="card-text">Launch Cost: @matchingRocket.cost_per_launch $</p>
+                            }
+                        }
+
+                        @if (!string.IsNullOrEmpty(launch?.links?.video_link))
+                        {
+                            <a href="@launch.links.video_link" class="card-link">Watch The Launch!</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+
+
+
+
+@* @if (Model.Launches != null && Model.Launches.Count > 0 && Model.RocketModels != null && Model.RocketModels.Count > 0)
+{
+    <div class="row">
+        @foreach (var launch in Model.Launches)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center text-capitalize">
+                        <h5 class="card-title">Mission: @launch?.mission_name</h5>
+                        <p class="fw-medium">Flight Number: @launch?.flight_number</p>
+                        <p class="card-text">Launch Year: @launch?.launch_year</p>
+                        <p class="card-text">Launch Date: @launch?.launch_date_utc</p>
+                        <p class="card-text">Rocket: @launch?.Rocket?.rocket_name</p>
+                        <p class="card-text">Launch Site: @launch?.launch_site?.site_name</p>
+                        <p class="card-text">Launch Success: @launch?.launch_success</p>
+
+                        @if (launch?.Rocket != null)
+                        {
+                            <p class="card-text">Details: @launch?.Details</p>
+
+                            @if (Model.RocketModels.Any())
+                            {
+                                var matchingRocket = Model.RocketModels.FirstOrDefault(r => r.rocket_name == launch.Rocket.rocket_name);
+
+                                if (matchingRocket != null)
+                                {
+                                    <p class="card-text">Launch Cost: $@matchingRocket.cost_per_launch</p>
+                                }
+                            }
+                        }
+
+                        @if (!string.IsNullOrEmpty(launch?.links?.video_link))
+                        {
+                            <a href="@launch.links.video_link" class="card-link">Watch The Launch!</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+} *@
+
+@* @if (Model.RocketModels != null && Model.RocketModels.Count > 0)
+{
+    <div class="row">
+        @foreach (var rocket in Model.RocketModels)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center text-capitalize">
+                        <p class="card-text">Cost Per Launch: @rocket?.cost_per_launch $</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+} *@
+
+
+
+
+@section Styles {
+    <link rel="stylesheet", href="~/css/black.css"/>
+}
